@@ -1,15 +1,21 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
-
+﻿
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+    color: #D9CAB3 !important;
+    font-family: Playbill, 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 48px;
+}
+.navbar-toggler .navbar-toggler-icon{
+    width:35px !important;
+    height:35px !important;
 }
 
-/* Provide sufficient contrast against white background */
-a {
-  color: #0366d6;
+a.nav-link, button.nav-link {
+    color: #F6F6F6;
+    font-family: Rockwell, 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 24px;
 }
 
 .btn-primary {
@@ -24,10 +30,8 @@ a {
   border-color: #1861ac;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
 html {
-  font-size: 14px;
+  font-size: 24px;
 }
 @media (min-width: 768px) {
   html {
@@ -51,21 +55,30 @@ button.accept-policy {
   line-height: inherit;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
 html {
   position: relative;
   min-height: 100%;
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: #212121;
+}
+.nav {
+    background-color: #212121;
 }
 .footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+  line-height: 60px;
+}
+
+.text-cream {
+    color: #D9CAB3;
+}
+
+.text-white {
+    color: #F6F6F6;
 }
