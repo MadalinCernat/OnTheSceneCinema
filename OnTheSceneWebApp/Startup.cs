@@ -42,7 +42,6 @@ namespace OnTheSceneWebApp
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddControllersWithViews();
-
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -55,7 +54,6 @@ namespace OnTheSceneWebApp
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
@@ -70,7 +68,8 @@ namespace OnTheSceneWebApp
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller}/{action}/{id?}",
+                    defaults: new { controller = "movies", action = "index"});
                 endpoints.MapRazorPages();
             });
         }
