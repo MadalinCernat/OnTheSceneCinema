@@ -4,15 +4,17 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - On The Scene Cinema</title>
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+
     <link rel="icon" href="~/cinema-logo.png" />
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="movies" asp-action="index">
+                <a class="navbar-brand text-nowrap" asp-area="" asp-controller="movies" asp-action="index">
                     <img src="~/cinema-logo.png" alt="logo" width="70" height="55" />
                     On the Scene
                 </a>
@@ -23,10 +25,10 @@
                 <div class="navbar-collapse collapse">
                     <ul class="navbar-nav flex-grow-1 d-sm-inline-flex justify-content-xl-center">
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="movies" asp-action="index">movies</a>
+                            <a class="nav-link text-light text-nowrap" asp-area="" asp-controller="movies" asp-action="list">movies</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="movies" asp-action="reservations">reservations</a>
+                            <a class="nav-link text-light text-nowrap" asp-area="" asp-controller="movies" asp-action="reservations">reservations</a>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
@@ -42,7 +44,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2021 - OnTheSceneWebApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="text-white">&copy; 2021 - On The Scene Cinema - <a asp-area="" asp-controller="Home" asp-action="Privacy" style="color: #6D9886;">Privacy</a></div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

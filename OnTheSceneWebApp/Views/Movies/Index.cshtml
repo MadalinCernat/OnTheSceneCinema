@@ -1,3 +1,27 @@
 ﻿@{
     ViewData["Title"] = "Index";
 }
+@model MainPageMovieOptions
+
+
+<div class="fluid-container">
+    <div class="row no-gutters">
+        <div class="col-md">
+            <div class="main-image h-50 d-flex align-items-start">
+                <img src="@Model.PosterUrl" class="img-fluid" />
+            </div>
+        </div>
+        <div class="col-md my-auto">
+            <div class="flex-grow-1 px-5 py-auto text-center">
+                <p class="main-title font-weight-bold text-green">@Model.Title</p>
+                <p class="main-desc">@Model.Description</p>
+                <p class="main-date">@Model.ReleaseDate.ToShortDateString()</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
