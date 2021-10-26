@@ -26,7 +26,7 @@ namespace OnTheSceneWebApp.Controllers
             _roleManager = roleManager;
             _db = db;
         }
-        public async Task<IActionResult> AddRole(string role)
+        private async Task<IActionResult> AddRole(string role)
         {
             if (!await _roleManager.RoleExistsAsync(role))
             {
@@ -34,6 +34,7 @@ namespace OnTheSceneWebApp.Controllers
             }
             return Json(_roleManager.Roles);
         }
+        [HttpGet]
         public IActionResult Index()
         {
             var mainPageMovieOptions = new MainPageMovieOptions();
@@ -56,9 +57,13 @@ namespace OnTheSceneWebApp.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
+        [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> CreateMovie(MovieModel model)
         {
-            await _db.CreateMovie(model);
+            if(ModelState.IsValid)
+            {
+                await _db.CreateMovie(model);
+            }    
             return View();
         }
     }
