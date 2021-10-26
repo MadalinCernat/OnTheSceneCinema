@@ -51,7 +51,7 @@ namespace OnTheSceneWebApp.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult CreateMovie()
         {
-            return View(new MovieModel { DateReleased = DateTime.Now.Date});
+            return View(new MovieModel { DateReleased = DateTime.Now.Date, CreateDate = DateTime.Now.Date, LastUpdated = DateTime.Now.Date });
         }
 
         [HttpPost]
@@ -59,7 +59,7 @@ namespace OnTheSceneWebApp.Controllers
         public async Task<IActionResult> CreateMovie(MovieModel model)
         {
             await _db.CreateMovie(model);
-            return View("createmovie", new MovieModel { DateReleased = DateTime.Now.Date });
+            return View();
         }
     }
 }
