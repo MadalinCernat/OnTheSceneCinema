@@ -1,0 +1,17 @@
+﻿@page
+@model OnTheSceneWebApp.Areas.Identity.Pages.Account.Manage.AdminPanelModel
+@{
+    ViewData["Title"] = "Admin Panel";
+}
+
+<style>
+    #adminPagesLinks{
+        list-style-type:none;
+    }
+</style>
+
+<ul id="adminPagesLinks">
+    <li><a asp-controller="movies" asp-action="createmovie">Add Movie</a></li>
+</ul>
+
+
