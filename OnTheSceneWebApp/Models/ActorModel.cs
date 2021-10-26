@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace OnTheSceneWebApp.Models
 {
-    public class UniqueCode
+    public class ActorModel
     {
         public int Id { get; set; }
-        public string Content { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
     }
 }

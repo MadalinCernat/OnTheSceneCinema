@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace OnTheSceneWebApp.Models
 {
-    class AvailableBookingModel
+    public class AvailableBookingModel
     {
         public int Id { get; set; }
         public int MovieId { get; set; }
-        public List<string> HoursAvailable { get; set; }
+        public List<HoursModel> HoursAvailable { get; set; }
         public int CinemaHallId { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime LastUpdated { get; set; }

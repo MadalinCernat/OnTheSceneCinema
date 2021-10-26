@@ -29,16 +29,22 @@ namespace OnTheSceneWebApp
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<MoviesDbContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options => { 
+            services.AddDefaultIdentity<IdentityUser>(options =>
+            {
                 options.SignIn.RequireConfirmedAccount = true;
-                options.Password = new PasswordOptions { 
-                    RequireDigit = false, 
-                    RequiredLength = 6, 
-                    RequireUppercase = false, 
-                    RequireNonAlphanumeric = false };
-                })
+                options.Password = new PasswordOptions
+                {
+                    RequireDigit = false,
+                    RequiredLength = 6,
+                    RequireUppercase = false,
+                    RequireNonAlphanumeric = false
+                };
+            })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddControllersWithViews();
@@ -69,7 +75,7 @@ namespace OnTheSceneWebApp
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action}/{id?}",
-                    defaults: new { controller = "movies", action = "index"});
+                    defaults: new { controller = "movies", action = "index" });
                 endpoints.MapRazorPages();
             });
         }

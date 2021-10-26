@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace OnTheSceneWebApp.Models
 {
-    class ReservationModel
+    public class ReservationModel
     {
         public int Id { get; set; }
         public int UniqueCodeId { get; set; }
         public int AvailableBookingId { get; set; }
-        public List<int> Chairs { get; set; }
+        public List<ChairModel> Chairs { get; set; }
         public string Time { get; set; }
         public bool OnlineReservation { get; set; }
         public string Name { get; set; }

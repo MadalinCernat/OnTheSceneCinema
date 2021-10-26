@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace OnTheSceneWebApp.Models
 {
-    public class UniqueCode
+    public class HoursModel
     {
         public int Id { get; set; }
-        public string Content { get; set; }
+        public string Hour { get; set; }
+        public string Minutes { get; set; }
     }
 }

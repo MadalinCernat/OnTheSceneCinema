@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OnTheSceneWebApp.Models
 {
-    class CinemaHall
+    public class CinemaHall
     {
         public int Id { get; set; }
         public int NumberOfRows { get; set; }

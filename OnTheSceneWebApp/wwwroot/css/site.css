@@ -103,6 +103,20 @@ body {
         font-size: 30px;
     }
 }
+
+@media screen and (max-width: 300px) {
+    .main-title {
+        font-size: 24px;
+    }
+
+    .main-desc {
+        font-size: 16px;
+    }
+
+    .main-date {
+        font-size: 14px;
+    }
+}
 @media screen and (max-width: 1032px ) {
     .main-title {
         font-size: 32px;

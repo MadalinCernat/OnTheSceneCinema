@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OnTheSceneWebApp.Models
 {
-    class MovieModel
+    public class MovieModel
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -13,7 +13,7 @@ namespace OnTheSceneWebApp.Models
         public string PosterUrl { get; set; }
         public string Runtime { get; set; }
         public string Genre { get; set; }
-        public List<string> Actors { get; set; }
+        public List<ActorModel> Actors { get; set; }
         public string Plot { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime LastUpdated { get; set; }
