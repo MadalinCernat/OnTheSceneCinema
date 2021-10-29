@@ -1,0 +1,57 @@
+﻿@model CreateAvailableBookingViewModel
+@{
+    ViewData["Title"] = "Create Available Booking";
+}
+
+<form method="post" asp-action="createavailablebooking" asp-controller="movies">
+    <h3 class="text-center">Add available booking to database</h3>
+    <div class="row">
+        <div class="col-md">
+            <select asp-for="AvailableBooking.MovieId">
+                @foreach (var movie in Model.TitleId)
+                {
+                    <option value="@movie.Id">@movie.Title</option>
+                }
+            </select>
+            @for (int i = 0; i < 3; i++)
+            {
+                <div class="row">
+                    <div class="col">
+                        <label asp-for="AvailableBooking.HoursAvailable[i]" class="form-check-label">Hours</label>
+                        <div class="form-group">
+                            <input class="form-control" asp-for="AvailableBooking.HoursAvailable[i].Hour" placeholder="Enter hour @(i+1)...">
+                            <span asp-validation-for="AvailableBooking.HoursAvailable[i].Hour" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="AvailableBooking.HoursAvailable[i]" class="form-check-label">Minutes</label>
+                            <input class="form-control" asp-for="AvailableBooking.HoursAvailable[i].Minutes" placeholder="Enter minutes @(i+1)...">
+                            <span asp-validation-for="AvailableBooking.HoursAvailable[i].Minutes" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            }
+            <p>
+                Available Halls:
+                @foreach (var hall in Model.Halls)
+                {
+                <p>Hall @hall.Id : Chairs = @(hall.NumberOfColumns * hall.NumberOfRows);</p>
+            }
+                </p>
+                <div class="form-group">
+                    <label asp-for="AvailableBooking.CinemaHallId" class="form-check-label">Cinema Hall</label>
+                    <input class="form-control" asp-for="AvailableBooking.CinemaHallId" placeholder="Enter cinema hall...">
+                    <span asp-validation-for="AvailableBooking.CinemaHallId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md">
+                <input type="submit" class="btn btn-primary" value="Submit">
+            </div>
+        </div>
+    </form>

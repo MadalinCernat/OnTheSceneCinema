@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using OnTheSceneWebApp.Data;
 using OnTheSceneWebApp.Models;
-using OnTheSceneWebApp.Services;
+using OnTheSceneWebApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,14 +19,14 @@ namespace OnTheSceneWebApp.Controllers
         private readonly ILogger<MoviesController> _logger;
         private readonly IConfiguration _config;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly CrudOperations _db;
+        private readonly MoviesDbContext _dbContext;
 
-        public MoviesController(ILogger<MoviesController> logger, IConfiguration config, RoleManager<IdentityRole> roleManager, CrudOperations db)
+        public MoviesController(ILogger<MoviesController> logger, IConfiguration config, RoleManager<IdentityRole> roleManager, MoviesDbContext dbContext)
         {
             _logger = logger;
             _config = config;
             _roleManager = roleManager;
-            _db = db;
+            _dbContext = dbContext;
         }
         private async Task<IActionResult> AddRole(string role)
         {
@@ -43,11 +45,33 @@ namespace OnTheSceneWebApp.Controllers
             return View(mainPageMovieOptions);
         }
         [HttpGet]
-        public IActionResult List()
+        public async Task<IActionResult> List()
         {
-            return View();
+            var availableBookings = new List<AvailableBookingModel>();
+            var movies = new List<MovieModel>();
+            var halls = new List<CinemaHall>();
+            var hours = new List<HoursModel>();
+
+            using (_dbContext)
+            {
+                availableBookings = await _dbContext.AvailableBookings.ToListAsync();
+                movies = await _dbContext.Movies.ToListAsync();
+                halls = await _dbContext.CinemaHalls.ToListAsync();
+                hours = await _dbContext.Hours.ToListAsync();
+            }
+
+            List<AvailableBookingViewModel> model = new();
+            foreach(var ab in availableBookings)
+            {
+                var movie = movies.Where(m => m.Id == ab.MovieId).FirstOrDefault();
+                var hall = halls.Where(h => h.Id == ab.CinemaHallId).FirstOrDefault();
+                var hoursAvailable = hours.Where(ho => ho.AvailableBookingModelId == ab.Id).ToList();
+                model.Add(new AvailableBookingViewModel { Movie = movie, Hours = ab.HoursAvailable, CinemaHall = hall });
+            }
+            return View(model);
         }
 
+        #region Create Movie
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public IActionResult CreateMovie()
@@ -62,9 +86,88 @@ namespace OnTheSceneWebApp.Controllers
         {
             if(ModelState.IsValid)
             {
-                await _db.CreateMovie(model);
+                using (_dbContext)
+                {
+                    await _dbContext.Movies.AddAsync(model);
+                    await _dbContext.SaveChangesAsync();
+                }
             }    
             return View();
         }
+        #endregion
+
+
+        #region Create Available Booking
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> CreateAvailableBooking()
+        {
+            List<MovieModel> movies = new();
+            List<CinemaHall> halls = new();
+            using(_dbContext)
+            {
+                movies = await _dbContext.Movies.ToListAsync();
+                halls = await _dbContext.CinemaHalls.ToListAsync();
+            }    
+
+            var titleIdList = new List<MovieTitleId>();
+
+            foreach (var movie in movies)
+            {
+                titleIdList.Add(new MovieTitleId { Id = movie.Id, Title = movie.Title });
+            }
+
+            return View(
+                new CreateAvailableBookingViewModel { 
+                    AvailableBooking = new AvailableBookingModel {
+                        LastUpdated = DateTime.Now.Date,
+                        CreateDate = DateTime.Now.Date }, TitleId = titleIdList, Halls = halls } );
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [AutoValidateAntiforgeryToken]
+        public async Task<IActionResult> CreateAvailableBooking(CreateAvailableBookingViewModel model)
+        {
+            List<MovieModel> movies = new();
+            List<CinemaHall> halls = new();
+            
+            //Add the available booking to db
+            //Populate movies and halls lists
+            if (ModelState.IsValid)
+            {
+                using(_dbContext)
+                {
+                    movies = await _dbContext.Movies.ToListAsync();
+                    halls = await _dbContext.CinemaHalls.ToListAsync();
+                    await _dbContext.AvailableBookings.AddAsync(model.AvailableBooking);
+                    await _dbContext.SaveChangesAsync();
+                }
+            }
+
+            //Make the TitleId model
+            var titleIdList = new List<MovieTitleId>();
+            foreach (var movie in movies)
+            {
+                titleIdList.Add(new MovieTitleId { Id = movie.Id, Title = movie.Title });
+            }
+
+            return View(
+                new CreateAvailableBookingViewModel
+                {
+                    AvailableBooking = new AvailableBookingModel
+                    {
+                        LastUpdated = DateTime.Now.Date,
+                        CreateDate = DateTime.Now.Date
+                    },
+                    TitleId = titleIdList,
+                    Halls = halls
+                });
+        }
+
+
+        #endregion
+
     }
 }

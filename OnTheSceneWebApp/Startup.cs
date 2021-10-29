@@ -8,7 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OnTheSceneWebApp.Data;
-using OnTheSceneWebApp.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,7 +48,6 @@ namespace OnTheSceneWebApp
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddControllersWithViews();
-            services.AddTransient<CrudOperations>(); 
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

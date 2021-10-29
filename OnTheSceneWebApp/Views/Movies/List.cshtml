@@ -1,3 +1,20 @@
-﻿@{
-    ViewData["Title"] = "Available Movies";
+﻿@model List<AvailableBookingViewModel>
+@{
+    ViewData["Title"] = "List of Movies";
+    int cnt = Model.Count;
+}
+
+
+@for (int i = 0; i < cnt; i++)
+{
+    <h5>@Model[i].Movie.Title</h5>
+    <img src="@Model[i].Movie.PosterUrl" style="width:30%; height:auto" />
+    <h6>@Model[i].Movie.Plot</h6>
+    <p>
+        Available at:
+        @foreach (var hour in Model[i].Hours)
+        {
+        <p>@hour.Hour : @hour.Minutes</p>
+        }
+    </p>
 }
