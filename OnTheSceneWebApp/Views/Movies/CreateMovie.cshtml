@@ -5,6 +5,8 @@
 
 
 <form method="post" asp-action="createmovie" asp-controller="movies">
+    <input type="hidden" asp-for="CreateDate" value="@DateTime.Today" />
+    <input type="hidden" asp-for="LastUpdated" value="@DateTime.Today" />
     <h1 class="text-center">Add movie to database</h1>
     <div class="row">
         <div class="col-md">

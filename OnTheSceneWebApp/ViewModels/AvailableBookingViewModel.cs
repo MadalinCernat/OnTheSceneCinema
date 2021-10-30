@@ -11,5 +11,6 @@ namespace OnTheSceneWebApp.ViewModels
         public MovieModel Movie { get; set; }
         public List<HoursModel> Hours { get; set; }
         public CinemaHall CinemaHall { get; set; }
+        public DateTime Date { get; set; }
     }
 }

@@ -4,6 +4,8 @@
 }
 
 <form method="post" asp-action="createavailablebooking" asp-controller="movies">
+    <input type="hidden" asp-for="AvailableBooking.CreateDate" value="@DateTime.Today" />
+    <input type="hidden" asp-for="AvailableBooking.LastUpdated" value="@DateTime.Today" />
     <h3 class="text-center">Add available booking to database</h3>
     <div class="row">
         <div class="col-md">
@@ -13,6 +15,11 @@
                     <option value="@movie.Id">@movie.Title</option>
                 }
             </select>
+            <div class="form-group">
+                <label class="form-check-label" asp-for="AvailableBooking.Date">Date</label>
+                <input class="form-control" asp-for="AvailableBooking.Date" />
+                <span asp-validation-for="AvailableBooking.Date" class="text-danger"></span>
+            </div>
             @for (int i = 0; i < 3; i++)
             {
                 <div class="row">
@@ -33,13 +40,11 @@
                     </div>
                 </div>
             }
-            <p>
                 Available Halls:
                 @foreach (var hall in Model.Halls)
                 {
                 <p>Hall @hall.Id : Chairs = @(hall.NumberOfColumns * hall.NumberOfRows);</p>
             }
-                </p>
                 <div class="form-group">
                     <label asp-for="AvailableBooking.CinemaHallId" class="form-check-label">Cinema Hall</label>
                     <input class="form-control" asp-for="AvailableBooking.CinemaHallId" placeholder="Enter cinema hall...">

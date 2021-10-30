@@ -66,7 +66,7 @@ namespace OnTheSceneWebApp.Controllers
                 var movie = movies.Where(m => m.Id == ab.MovieId).FirstOrDefault();
                 var hall = halls.Where(h => h.Id == ab.CinemaHallId).FirstOrDefault();
                 var hoursAvailable = hours.Where(ho => ho.AvailableBookingModelId == ab.Id).ToList();
-                model.Add(new AvailableBookingViewModel { Movie = movie, Hours = ab.HoursAvailable, CinemaHall = hall });
+                model.Add(new AvailableBookingViewModel { Movie = movie, Hours = ab.HoursAvailable, CinemaHall = hall, Date = ab.Date });
             }
             return View(model);
         }
@@ -76,7 +76,7 @@ namespace OnTheSceneWebApp.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult CreateMovie()
         {
-            return View(new MovieModel { DateReleased = DateTime.Now.Date, CreateDate = DateTime.Now.Date, LastUpdated = DateTime.Now.Date });
+            return View(new MovieModel { DateReleased = DateTime.Now.Date});
         }
 
         [HttpPost]
@@ -120,9 +120,7 @@ namespace OnTheSceneWebApp.Controllers
 
             return View(
                 new CreateAvailableBookingViewModel { 
-                    AvailableBooking = new AvailableBookingModel {
-                        LastUpdated = DateTime.Now.Date,
-                        CreateDate = DateTime.Now.Date }, TitleId = titleIdList, Halls = halls } );
+                    AvailableBooking = new AvailableBookingModel {Date=DateTime.Today}, TitleId = titleIdList, Halls = halls } );
         }
 
         [HttpPost]
@@ -158,8 +156,7 @@ namespace OnTheSceneWebApp.Controllers
                 {
                     AvailableBooking = new AvailableBookingModel
                     {
-                        LastUpdated = DateTime.Now.Date,
-                        CreateDate = DateTime.Now.Date
+                    Date=DateTime.Today
                     },
                     TitleId = titleIdList,
                     Halls = halls
