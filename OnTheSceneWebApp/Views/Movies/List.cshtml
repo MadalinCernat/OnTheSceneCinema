@@ -5,17 +5,24 @@
 }
 
 
-@for (int i = 0; i < cnt; i++)
-{
-    @if (Model[i].Date.Date.Equals(DateTime.Today.Date.AddDays(1)))
+<div class="card-columns">
+    @for (int i = 0; i < cnt; i++)
     {
-    <h5>@Model[i].Movie.Title</h5>
-    <img src="@Model[i].Movie.PosterUrl" style="width:30%; height:auto" />
-    <h6>@Model[i].Movie.Plot</h6>
-    <p>Available at:</p>
-        foreach (var hour in Model[i].Hours)
+        @if (Model[i].Date.Date.Equals(DateTime.Parse("10/31/2021")))
         {
-        <p>@hour.Hour : @hour.Minutes</p>
-            }
+            <div class="card bg-negru">
+                <img src="@Model[i].Movie.PosterUrl" class="card-img-top img-fluid" alt="card image @i" />
+                <div class="card-body">
+                    <h5 class="card-title text-center">@Model[i].Movie.Title</h5>
+                    <div class="card-text d-flex">
+                        <div class="mr-2">Available at:</div>
+                        @foreach (var hour in Model[i].Hours)
+                        {
+                            <div class="mr-2 border border-light rounded">@hour.Hour : @hour.Minutes</div>
+                        }
+                    </div>
+                </div>
+            </div>
         }
     }
+</div>
