@@ -66,7 +66,7 @@ namespace OnTheSceneWebApp.Controllers
                 var movie = movies.Where(m => m.Id == ab.MovieId).FirstOrDefault();
                 var hall = halls.Where(h => h.Id == ab.CinemaHallId).FirstOrDefault();
                 var hoursAvailable = hours.Where(ho => ho.AvailableBookingModelId == ab.Id).ToList();
-                model.Add(new AvailableBookingViewModel { Movie = movie, Hours = ab.HoursAvailable, CinemaHall = hall, Date = ab.Date });
+                model.Add(new AvailableBookingViewModel { AvailableBookingId = ab.Id, Movie = movie, Hours = ab.HoursAvailable, CinemaHall = hall, Date = ab.Date });
             }
             return View(model);
         }
@@ -165,6 +165,40 @@ namespace OnTheSceneWebApp.Controllers
 
 
         #endregion
+
+
+        #region Book
+
+        public async Task<IActionResult> BookMovie(int id, int hourId)
+        {
+            List<AvailableBookingModel> availableBookings;
+            List<MovieModel> movies;
+            List<HoursModel> hours;
+
+            using (_dbContext)
+            {
+                availableBookings = await _dbContext.AvailableBookings.ToListAsync();
+                movies = await _dbContext.Movies.ToListAsync();
+                hours = await _dbContext.Hours.ToListAsync();
+            }
+            
+            var availableBooking = availableBookings.Where(x => x.Id == id).FirstOrDefault();
+            var movie = movies.Where(x=>x.Id == availableBooking.MovieId).FirstOrDefault();
+            //hours = hours.Where(x => x.Id == availableBooking.Id).ToList();
+            //availableBooking.HoursAvailable = hours;
+
+            var model = new BookMovieViewModel
+            {
+                Movie = movie,
+                AvailableBooking = availableBooking,
+                HourId = hourId
+            };
+            return View(model);
+        }
+
+
+        #endregion
+
 
     }
 }

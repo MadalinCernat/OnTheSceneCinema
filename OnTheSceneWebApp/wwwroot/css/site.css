@@ -153,3 +153,11 @@ body {
     color: #D9CAB3 !important;
     background-color: #6D9886 !important;
 }
+
+.hour {
+    text-decoration: none;
+    color: white;
+}
+.hour:hover{
+    text-decoration:none;
+}

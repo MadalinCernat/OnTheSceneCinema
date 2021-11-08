@@ -1,0 +1,18 @@
+﻿@model BookMovieViewModel
+@{
+    ViewData["Title"] = "Book a Movie";
+}
+
+<h1 class="text-center">@Model.Movie.Title</h1>
+<p>@Model.Movie.Plot</p>
+@foreach(var h in Model.AvailableBooking.HoursAvailable)
+{
+    @if(h.Id == Model.HourId)
+    {
+        <p style="color: red;">@h.Hour : @h.Minutes</p>
+    }
+    else
+    {
+        <p>@h.Hour : @h.Minutes</p>
+    }
+}

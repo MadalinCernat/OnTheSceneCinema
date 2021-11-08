@@ -8,6 +8,7 @@ namespace OnTheSceneWebApp.ViewModels
 {
     public class AvailableBookingViewModel
     {
+        public int AvailableBookingId { get; set; }
         public MovieModel Movie { get; set; }
         public List<HoursModel> Hours { get; set; }
         public CinemaHall CinemaHall { get; set; }

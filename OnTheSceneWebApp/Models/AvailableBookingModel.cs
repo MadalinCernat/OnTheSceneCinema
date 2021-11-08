@@ -11,7 +11,7 @@ namespace OnTheSceneWebApp.Models
         public int Id { get; set; }
         [Required]
         public int MovieId { get; set; }
-        public List<HoursModel> HoursAvailable { get; set; }
+        public List<HoursModel> HoursAvailable { get; set; } = new List<HoursModel>();
         [Required]
         public int CinemaHallId { get; set; }
         [Required]

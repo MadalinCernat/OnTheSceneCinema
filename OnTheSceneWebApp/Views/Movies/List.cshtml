@@ -18,7 +18,9 @@
                         <div class="mr-2">Available at:</div>
                         @foreach (var hour in Model[i].Hours)
                         {
-                            <div class="mr-2 border border-light rounded">@hour.Hour : @hour.Minutes</div>
+                            <a asp-controller="movies" asp-action="bookmovie" asp-route-id="@Model[i].AvailableBookingId" asp-route-hourid="@hour.Id">
+                                <div class="hour mr-2 border border-light rounded">@hour.Hour : @hour.Minutes</div>
+                            </a>
                         }
                     </div>
                 </div>
