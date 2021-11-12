@@ -161,3 +161,17 @@ body {
 .hour:hover{
     text-decoration:none;
 }
+
+.p {
+    text-align: center;
+
+}
+
+p span {
+    background-color: #6D9886;
+    border-radius: 7px;
+}
+
+.book-movie-description{
+    text-align:center;
+}
