@@ -168,7 +168,7 @@ namespace OnTheSceneWebApp.Controllers
 
 
         #region Book
-
+        [HttpGet]
         public async Task<IActionResult> BookMovie(int id, int hourId)
         {
             List<AvailableBookingModel> availableBookings;
@@ -194,6 +194,39 @@ namespace OnTheSceneWebApp.Controllers
                 HourId = hourId
             };
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> BookMovie(BookMovieViewModel model)
+        {
+            var rand = new Random();
+            var reservation = new ReservationModel
+            {
+                OnlineReservation = true,
+                AvailableBookingId = model.AvailableBooking.Id,
+                CreateDate = DateTime.Today,
+                LastUpdated = DateTime.Today,
+            };
+            List<HoursModel> hours;
+
+            reservation.Date = model.AvailableBooking.Date;
+            
+            for (int i = 0; i < 6; i++)
+            {
+                reservation.UniqueCodeId += rand.Next(0, 10);
+                reservation.UniqueCodeId *= 10;
+            }
+            reservation.Name = "Sample";
+            using (_dbContext)
+            {
+                hours = await _dbContext.Hours.ToListAsync();
+                HoursModel hour = hours.First(x => x.Id == model.HourId);
+                reservation.Time = $"{hour.Hour}:{hour.Minutes}";
+                await _dbContext.Reservations.AddAsync(reservation);
+                await _dbContext.SaveChangesAsync();
+            }
+
+            return RedirectToAction("index");
         }
 
 

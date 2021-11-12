@@ -4,15 +4,26 @@
 }
 
 <h1 class="text-center">@Model.Movie.Title</h1>
-<p>@Model.Movie.Plot</p>
-@foreach(var h in Model.AvailableBooking.HoursAvailable)
-{
-    @if(h.Id == Model.HourId)
-    {
-        <p style="color: red;">@h.Hour : @h.Minutes</p>
-    }
-    else
-    {
-        <p>@h.Hour : @h.Minutes</p>
-    }
-}
+<p class="book-movie-description">@Model.Movie.Plot</p>
+<form method="post">
+    <input type="hidden" asp-for="Movie.Id" value="@Model.Movie.Id"/>
+    <input type="hidden" asp-for="HourId" value="@Model.HourId"/>
+    <input type="hidden" asp-for="AvailableBooking.Id" value="@Model.AvailableBooking.Id"/>
+    <input type="hidden" asp-for="AvailableBooking.Date" value="@Model.AvailableBooking.Date" />
+    <div class="hoursAvailable d-flex justify-content-between">
+        @foreach (var h in Model.AvailableBooking.HoursAvailable)
+        {
+            <div class="hourAvailable">
+                @if (h.Id == Model.HourId)
+                {
+                    <p class="text-cream p-2"><span>@h.Hour : @h.Minutes</span></p>
+                }
+                else
+                {
+                    <p class="text-white"><span>@h.Hour : @h.Minutes</span></p>
+                }
+            </div>
+        }
+    </div>
+    <input type="submit" class="btn btn-primary" />
+</form>
